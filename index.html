@@ -17,20 +17,24 @@
     <form id="give-money-form" action="https://api.darujme.sk/v1/donations/post/" method="post" enctype="application/x-www-form-urlencoded">
 
     <h4>Darujem Sumu</h4>
-    <div id="amout_onetime_020" class="onetime-divs button-selector active"><span>20 &euro;</span></div>
-    <div id="amout_onetime_050" class="onetime-divs button-selector"><span>50 &euro;</span></div>
-    <div id="amout_onetime_100" class="onetime-divs button-selector"><span>100 &euro;</span></div>
-    <div id="amout_onetime_500" class="onetime-divs button-selector"><span>500 &euro;</span></div>
+    <div class="onetimes">
+        <div id="amout_onetime_020" class="onetime-divs button-selector active"><span>20 &euro;</span></div>
+        <div id="amout_onetime_050" class="onetime-divs button-selector"><span>50 &euro;</span></div>
+        <div id="amout_onetime_100" class="onetime-divs button-selector"><span>100 &euro;</span></div>
+        <div id="amout_onetime_500" class="onetime-divs button-selector"><span>500 &euro;</span></div>
+    </div>
 
-    <input id="value" class="onetime-divs button-selector" type="number" min="1" max="9999" placeholder="Vlastná suma" value="">
+    <input id="custom-onetime" class="onetime-divs button-selector" type="number" min="1" max="9999" placeholder="Vlastná suma" value="">
 
-    <div id="amout_periodical_10" class="periodical-divs button-selector active hidden"><span>10 &euro;</span></div>
-    <div id="amout_periodical_15" class="periodical-divs button-selector hidden"><span>15 &euro;</span></div>
-    <div id="amout_periodical_20" class="periodical-divs button-selector hidden"><span>20 &euro;</span></div>
-    <div id="amout_periodical_50" class="periodical-divs button-selector hidden"><span>50 &euro;</span></div>
+    <div class="periodicals">
+        <div id="amout_periodical_10" class="periodical-divs button-selector active hidden"><span>10 &euro;</span></div>
+        <div id="amout_periodical_15" class="periodical-divs button-selector hidden"><span>15 &euro;</span></div>
+        <div id="amout_periodical_20" class="periodical-divs button-selector hidden"><span>20 &euro;</span></div>
+        <div id="amout_periodical_50" class="periodical-divs button-selector hidden"><span>50 &euro;</span></div>
+    </div>
 
-    <input id="value" class="periodical-divs button-selector hidden" type="number" min="1" max="9999" placeholder="Vlastná suma" value="">
-    <input name="value" id="value-send" type="hidden" min="1" max="9999" placeholder="Vlastná suma" value="" required>
+    <input id="custom-periodical" class="periodical-divs button-selector hidden" type="number" min="1" max="9999" placeholder="Vlastná suma" value="">
+    <input name="value" id="value-send" type="hidden" min="1" max="9999" value="" required>
 
     
         <input name="campaign_id" type="hidden" value="5a4949c5-d7f8-4264-9756-cfc2fadb0341">
@@ -96,7 +100,7 @@
             visibility: hidden;
         }
 
-        #value{
+        #custom-periodical, #custom-onetime{
             width: 93vw;
         }
     </style>
@@ -105,44 +109,75 @@
 <script>
     //Checks if the form inputs are filled in correctly every time form changes 
     $("#give-money-form").change(function(){
-		$("#errors").empty()
+		$("#errors").empty();
 
         if($("#value").val() < 1){
-            $("#errors").append("<p> Môžete darovať najmenej 1€ a najviac 9999€ </p>")
-            $("#value").val(1)
+            $("#errors").append("<p> Môžete darovať najmenej 1€ a najviac 9999€ </p>");
+            $("#value").val(1);
 
         } else if ($("#value").val() > 9999){
-            $("#errors").append("<p> Môžete darovať najmenej 1€ a najviac 9999€ </p>")
-            $("#value").val(9999) 
+            $("#errors").append("<p> Môžete darovať najmenej 1€ a najviac 9999€ </p>");
+            $("#value").val(9999);
         }
 
     })
 
+    //TODO -> Make this more efficient, tidy up the code!!! Break it into functions
+    function checkActive(){
+
+        if($("#onetime").hasClass("active")){
+
+            if($("#custom-onetime").hasClass("active")){
+                $("#value-send").val($("#custom-onetime").val())
+                $("#custom-onetime").change(function(){
+                    $("#value-send").val($("#custom-onetime").val())
+                })
+            }else {
+                $("#value-send").val($(".onetimes").find(".active").attr("id").slice(-3));
+            }
+        
+        }else if ($("#periodical").hasClass("active")){
+
+            if($("#custom-periodical").hasClass("active")){
+                $("#value-send").val($("#custom-periodical").val())
+                $("#custom-periodical").change(function(){
+                    $("#value-send").val($("#custom-periodical").val())
+                })
+            }else {
+                $("#value-send").val($(".periodicals").find(".active").attr("id").slice(-2));
+            }
+    
+        }
+    }
+
     $("#onetime").click(function(){
-        $("#onetime").addClass("active")
-        $("#periodical").removeClass("active")
-        $(".onetime-divs").removeClass("hidden")
-        $(".periodical-divs").addClass("hidden")
+        $("#onetime").addClass("active");
+        $("#periodical").removeClass("active");
+        $(".onetime-divs").removeClass("hidden");
+        $(".periodical-divs").addClass("hidden");
+        checkActive();
 
     })
 
     $("#periodical").click(function(){
-        $("#periodical").addClass("active")
-        $("#onetime").removeClass("active")
-        $(".periodical-divs").removeClass("hidden")
-        $(".onetime-divs").addClass("hidden")
+        $("#periodical").addClass("active");
+        $("#onetime").removeClass("active");
+        $(".periodical-divs").removeClass("hidden");
+        $(".onetime-divs").addClass("hidden");
+        checkActive();
     })
 
     var $onetime_divs = $('.onetime-divs').click(function(e) {
-        $("#value-send").val($(this).attr("id").slice(-3))
         $onetime_divs.removeClass("active");
         $(this).addClass("active");
+        checkActive();
     });
 
     var $periodical_divs = $('.periodical-divs').click(function(e) {
-        $("#value-send").val($(this).attr("id").slice(-2))
         $periodical_divs.removeClass("active");
         $(this).addClass("active");
+    
+        checkActive();
     });
     
 </script>
