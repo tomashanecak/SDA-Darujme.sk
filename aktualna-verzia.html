@@ -1,0 +1,110 @@
+<div id="errors"></div>
+<div class="payment-periodicity-container">
+    <div id="onetime" class="button-selector two-columns active">Jednorázovo</div>
+    <div id="periodical" class="button-selector two-columns">Mesačne</div>
+</div>
+
+
+<form id="give-money-form" action="https://api.darujme.sk/v1/donations/post/" enctype="application/x-www-form-urlencoded" method="post">
+
+
+    <h5 class="form-header">Darujem Sumu</h5>
+    <div class="onetimes">
+        <div id="amout_onetime_020" class="onetime-divs four-columns button-selector active">20 €</div>
+        <div id="amout_onetime_050" class="onetime-divs four-columns button-selector">50 €</div>
+        <div id="amout_onetime_100" class="onetime-divs four-columns button-selector">100 €</div>
+        <div id="amout_onetime_500" class="onetime-divs four-columns button-selector">500 €</div>
+    </div>
+
+    <input id="custom-onetime" class="onetime-divs button-selector" max="9999" min="1" type="number" value="" placeholder="Vlastná suma" />
+
+    <div class="periodicals">
+        <div id="amout_periodical_10" class="periodical-divs four-columns button-selector active hidden">10 €</div>
+        <div id="amout_periodical_15" class="periodical-divs four-columns button-selector hidden">15 €</div>
+        <div id="amout_periodical_20" class="periodical-divs four-columns button-selector hidden">20 €</div>
+        <div id="amout_periodical_50" class="periodical-divs four-columns button-selector hidden">50 €</div>
+    </div>
+
+    <input id="custom-periodical" class="periodical-divs button-selector hidden" max="9999" min="1" type="number" value="" placeholder="Vlastná suma" />
+    <input id="value-send" max="9999" min="1" name="value" required="" type="hidden" value="" />
+
+    
+    <input name="campaign_id" type="hidden" value="5a4949c5-d7f8-4264-9756-cfc2fadb0341" />
+
+    <div class="radio-group-onetime">
+        <input id="radio-cardpay" class="main-opt-onetime" type="radio" name="payment_method_id" value="1342d2af-a343-4e73-9f5a-7593b9978697" required>
+        <label for="radio-cardpay">CardPay</label>
+        <img src="https://new.sda.sk/wp-content/uploads/2021/12/cardpay-logo.jpg" alt="cardpay-logo" style="width: 4rem;">
+        <br>
+
+        <input id="radio-paypal" type="radio" name="payment_method_id" value="c58f76e1-cade-4300-9531-71e275476edd" required>
+        <label for="radio-paypal">PayPal</label>
+        <img src="https://new.sda.sk/wp-content/uploads/2021/12/paypal-logo.png" alt="paypal-logo" style="width: 3rem;">
+        <br>
+
+        <input id="radio-tatrapay" type="radio" name="payment_method_id" value="38409407-c4ec-4060-b4a1-4792f29335ad" required>
+        <label for="radio-tatrapay">TatraPay</label>
+        <img src="https://new.sda.sk/wp-content/uploads/2021/12/tatrapay-logo.jpg" alt="tatrapay-logo" style="width: 4rem;">
+        <br>
+
+        <input id="radio-sporopay" type="radio" name="payment_method_id" value="c07e714c-74ed-4ac6-ab63-3898a73f1fa0" required>
+        <label for="radio-sporopay">SporoPay</label>
+        <img src="https://new.sda.sk/wp-content/uploads/2021/12/sporopay-logo.png" alt="sporopay-logo" style="width: 5rem;">
+        <br>
+
+        <input id="radio-evub" type="radio" name="payment_method_id" value="f2e7956e-a3f6-4bff-9e18-2ab3096a5bed" required>
+        <label for="radio-evub">ePlatby VÚB</label>
+        <img src="https://new.sda.sk/wp-content/uploads/2021/12/eplatby-logo.png" alt="evub-logo" style="width: 5rem;">
+        <br> 
+
+        <input id="radio-banktrans" type="radio" name="payment_method_id" value="3dcf55d1-6383-45b4-b098-dc588187b854" required>
+        <label for="radio-banktrans">Bankový Prevod</label>
+        <img src="https://new.sda.sk/wp-content/uploads/2021/12/logo-karty.png" alt="banktrans-logo" style="width: 5rem;">
+        <br>
+    </div>
+
+    <div class="radio-group-periodical">
+        <input id="radio-comfortpay" class="main-opt-periodical" type="radio" name="payment_method_id" value="b71ff7cf-39f7-40db-8a34-e1f30292c215" required>
+        <label for="radio-comfortpay">ComfortPay</label>
+        <img src="https://new.sda.sk/wp-content/uploads/2021/12/comfortpay-logo.jpg" alt="comfortpay-logo"  style="width: 2rem;">
+        <br>
+
+        <input id="radio-banktrans-periodical" type="radio" name="payment_method_id" value="c58f76e1-cade-4300-9531-71e275476edd" required>
+        <label for="radio-banktrans-periodical">Bankový Prevod</label>
+        <img src="https://new.sda.sk/wp-content/uploads/2021/12/logo-karty.png" alt="banktrans-logo" style="width: 8rem;">
+        <br>
+    </div>
+    
+    <div class="personal-data-container">
+        <div class="two-columns">
+            <span>Meno</span>
+            <input name="first_name" required="" type="text" class="form-input"/>
+        </div>
+
+        <div class="two-columns">
+            <span>Priezvisko</span>
+            <input name="last_name" required="" type="text" class="form-input" />
+        </div>
+
+        <div class="two-columns">
+            <span>E-mail</span>
+            <input name="email" required="" type="email" class="form-input" />
+        </div>
+    </div>
+
+    <!--Tento Kód Bol pridaný!!!-->
+    <br>
+    <input name="sda-agreement" id="sda-agreement" type="checkbox" value="sda-agreement" required>
+    <label for="sda-agreement">Potvrdzujem, ze som bol/a informovaný/á o <strong><a href="https://www.sda.sk/sukromie" style="color: black;"> spracovaní osobných údajov</a></strong> organizáciou Slovenská debatná asociácia, ktorej poskytujem dar</label>
+    
+    <br>
+    <input name="sda-agreement" id="darujme-agreement" type="checkbox" value="darujme-agreement" required>
+    <label for="sda-agreement">Potvrdzujem, že som bol/a informovaný/á o spracovaní Osobných údajov v systéme <strong><a href="https://www.darujme.sk" style="color: black;">DARUJME.sk</a></strong></label>
+
+    <p>Potvrdením údajov súhlasíte s <strong><a href="https://darujme.sk/pravidla-a-podmienky/" style="color: black;">pravidlami</a></strong> používania <strong><a href="https://www.darujme.sk" style="color: black;">DARUJME.sk</a></strong> V ďalšom kroku Vás presmerujeme na stránku, kde bezpečne vyplníte Vaše platobné údaje a zašleme Vám aj informačný mail o dare. Ďakujeme!
+        Darca zároveň berie na vedomie, že poskytuje finančný dar bez protihodnoty a teda na platobnú operáciu sa nevzťahujú možnosti reklamácie platby ako pri nákupe služieb a tovarov.</p>
+
+    <div class="button-wrapper">
+        <input id="submit" type="submit" value="Darovať" class="form-submit-button"/>
+    </div>
+</form>
